@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class WordLadder {
-	private Stack<Stack<String>> candidate;
+	private Queue<Stack<String>> candidate;
 	private Set<String> smallDict;
 	private boolean flag;
 	public static void main(String[] args) throws IOException {
@@ -71,33 +71,36 @@ public class WordLadder {
 	        	}
 	        //filter the dictionary according to the length of word
 	        
-	        wl.candidate=new Stack<Stack<String>>();
+	        wl.candidate=new LinkedList<Stack<String>>();
 	        Stack<String> ladder=new Stack<String>();
 	        ladder.add(word1);
 	        wl.smallDict.remove(word1);
-	        wl.candidate.push(ladder);
-	        
+	        wl.candidate.offer(ladder);
+	    
 	        wl.findNeighbor(word2);
-	        while (!wl.candidate.empty() && !wl.flag) {
+	        while (!wl.candidate.isEmpty() && !wl.flag) {
 	        		wl.findNeighbor(word2);
 	        }
 	        if (wl.flag) {
-	        		ladder=wl.candidate.peek();
+	        		ladder=wl.getTail();
 	        		wl.printLadder(ladder,word1,word2);
 	        }
 	        else {
 	        		System.out.println("No word ladder found from "+word2+" back to "+word1+".");
 	        }
+	        
+	        
 	        wl.candidate.clear();
 	        wl.smallDict.clear();
 	        wl.flag=false;
+	        //clear the container
         }
         System.out.println("Have a nice day.");
 	}
 	
 	public void findNeighbor(String target) {
-		
-		Stack<String> temp=this.candidate.pop();
+		//find the suitable words
+		Stack<String> temp=this.candidate.poll();
 		Stack<String> t;
 		String word=temp.peek();
 		String cddWord;
@@ -105,10 +108,10 @@ public class WordLadder {
 		for (int j='a';j<='z';j++) {
 			cddWord=(char)j+word.substring(1);
 			if (this.smallDict.contains(cddWord)) {
-				System.out.println(cddWord);
+				//System.out.println(cddWord);
 				temp.push(cddWord);
 				t=copyStack(temp);
-				this.candidate.push(t);
+				this.candidate.offer(t);
 				temp.pop();
 				this.smallDict.remove(cddWord);
 				if (cddWord.compareTo(target)==0) {
@@ -123,10 +126,10 @@ public class WordLadder {
 				part2=word.substring(2+i,word.length());
 				cddWord=part1+(char) j+part2;
 				if (this.smallDict.contains(cddWord)) {
-					System.out.println(cddWord);
+					//System.out.println(cddWord);
 					temp.push(cddWord);
 					t=copyStack(temp);
-					this.candidate.push(t);
+					this.candidate.offer(t);
 					temp.pop();
 					this.smallDict.remove(cddWord);
 					if (cddWord.compareTo(target)==0) {
@@ -139,10 +142,10 @@ public class WordLadder {
 		for (int j='a';j<='z';j++) {
 			cddWord=word.substring(0,word.length()-1)+(char)j;
 			if (this.smallDict.contains(cddWord)) {
-				System.out.println(cddWord);
+				//System.out.println(cddWord);
 				temp.push(cddWord);
 				t=copyStack(temp);
-				this.candidate.push(t);
+				this.candidate.offer(t);
 				temp.pop();
 				this.smallDict.remove(cddWord);
 				if (cddWord.compareTo(target)==0) {
@@ -155,15 +158,16 @@ public class WordLadder {
 		return ;
 	}
 	
-	/*public Stack<String> getTail(){
-		Stack<String> stk=null;
-		while (!this.candidate.isEmpty()) {
-			stk=this.candidate.poll();
-		}
-		return stk;
-	}*/
-
+	public Stack<String> getTail(){
+	Stack<String> stk=null;
+	while (!this.candidate.isEmpty()) {
+	stk=this.candidate.poll();
+	}
+	return stk;
+	}
+	
 	public void printLadder(Stack<String> stk,String str1,String str2) {
+		//print the wordladder
 		System.out.println("A ladder from "+str2+" back to "+str1+":");
 		while (!stk.empty()) {
 			System.out.print(stk.pop()+" ");
@@ -171,6 +175,7 @@ public class WordLadder {
 		System.out.print("\n");
 		return;
 	}
+	
 	public Stack<String> copyStack(Stack<String> stk){
 		Stack<String> s=new Stack<String>();
 		Stack<String> q=new Stack<String>();
@@ -184,16 +189,5 @@ public class WordLadder {
 		return s;
 	}
 	
-	public Stack<Stack<String>> copyStackStack(Stack<Stack<String>> stk){
-		Stack<Stack<String>> c=new Stack<Stack<String>>();
-		Queue<Stack<String>> q=new LinkedList<Stack<String>>();
-		while (!stk.empty()) {
-			q.offer(stk.pop());
-		}
-		while (!c.isEmpty()) {
-			stk.push(q.peek());
-			c.push(q.poll());
-		}
-		return c;
-	}
+	
 }
