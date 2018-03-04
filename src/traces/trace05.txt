@@ -1,6 +1,0 @@
-dictionary.txt
-marty
-keith
-
-------------
-The two words must be found in the dictionary.

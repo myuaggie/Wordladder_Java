@@ -1,6 +1,0 @@
-dictionary.txt
-ghost
-boo
-
-------------
-The two words must be the same length.

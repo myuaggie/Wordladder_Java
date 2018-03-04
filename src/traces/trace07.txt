@@ -1,7 +1,0 @@
-dictionary.txt
-dog
-cat
-
-------------
-A ladder from cat back to dog:
-4

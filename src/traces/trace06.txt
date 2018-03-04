@@ -1,6 +1,0 @@
-dictionary.txt
-kitty
-kitty
-
-------------
-The two words must be different.

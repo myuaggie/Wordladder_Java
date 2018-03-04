@@ -1,13 +1,25 @@
-import java.io.*;
-import java.util.*;
+package com.leafive.test.maven5;
 
-public class WordLadder {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
+
+public class App
+{
 	private Queue<Stack<String>> candidate;
 	private Set<String> smallDict;
 	private boolean flag;
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		WordLadder wl=new WordLadder();
+		App wl=new App();
 		Set<String> dict= new HashSet<String>();
 		String word1,word2;
 		int tryWord;
@@ -18,8 +30,14 @@ public class WordLadder {
 		String fileName=br.readLine();
 		//System.out.println(fileName);
 		//get the dictionary file
+		File file = new File(fileName);  
+		while (!file.exists()) {
+			System.out.print("Dictionary file name? ");
+			fileName=br.readLine();
+			file=new File(fileName);
+		}
+		FileInputStream inputStream = new FileInputStream(fileName); 
 		
-		FileInputStream inputStream = new FileInputStream(fileName);  
         BufferedReader brDict = new BufferedReader(new InputStreamReader(inputStream)); 
         String dictLine=brDict.readLine();
         while (dictLine != null) {
@@ -97,6 +115,8 @@ public class WordLadder {
         }
         System.out.println("Have a nice day.");
 	}
+	
+	
 	
 	public void findNeighbor(String target) {
 		//find the suitable words
@@ -188,6 +208,5 @@ public class WordLadder {
 		}
 		return s;
 	}
-	
 	
 }
