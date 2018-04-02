@@ -7,6 +7,9 @@
 
     <display-name>Spring MVC Form Handling</display-name>
 
+ 
+
+    
     <servlet>
         <servlet-name>Wordladder</servlet-name>
         <servlet-class>
@@ -19,6 +22,5 @@
         <servlet-name>Wordladder</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
 </web-app>
 
