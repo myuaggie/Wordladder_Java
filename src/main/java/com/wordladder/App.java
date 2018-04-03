@@ -25,7 +25,7 @@ public class App {
 	private String word2;
 	private String dict;
 	
-	App(String dict,String word1,String word2){
+	public App(String dict,String word1,String word2){
 		this.dict=dict;
 		this.word1=word1;
 		this.word2=word2;
